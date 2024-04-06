@@ -7,7 +7,8 @@ class History(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     number = models.IntegerField(null=True)  
     from_number = models.IntegerField(null=True) 
-    to_number = models.IntegerField(null=True)   
+    to_number = models.IntegerField(null=True)  
+    result = models.CharField(max_length=200,null=True) 
     timestamp = models.DateTimeField(default=datetime.now, blank = True)
 
    

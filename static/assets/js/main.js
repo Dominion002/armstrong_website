@@ -258,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultDiv3.classList.add('green');
         resultDiv2.classList.remove('red');
     } else {
+        resultDiv3.classList.remove('green', 'red');
         resultDiv2.innerHTML = `No Armstrong numbers found in the range.`;
         resultDiv2.style.height = 'auto';
         resultDiv2.classList.add('red');

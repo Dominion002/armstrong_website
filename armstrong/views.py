@@ -23,14 +23,24 @@ def check_armstrong(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         number = data.get('number') 
+        result = is_armstrong(int(number))
         if request.user.is_authenticated:
             if number != "":
-                new_number = History.objects.create(user = request.user,number = number)
-                new_number.save()
+                if result:
+                    print("armstrong")
+                    new_number = History.objects.create(user = request.user,number = number ,result=f"{number} is an armstrong number")
+                    new_number.save()
+                else:
+                    print("not armstrong")
+                    new_number = History.objects.create(user = request.user,number = number ,result=f"{number} is not an armstrong number")
+                    new_number.save()
+                     
+               
+                
             
           
         
-        result = is_armstrong(int(number))
+        
         return JsonResponse({'result': result})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
@@ -39,12 +49,19 @@ def check_armstrongRange(request):
         data = json.loads(request.body)
         frome = data.get('frome')  
         to = data.get('to')
-        if request.user.is_authenticated:
-            if frome and to != "":
-                new_number = History.objects.create(user=request.user,from_number=frome,to_number=to)
-                new_number.save()
         result = armstrong_numbers_between(int(frome), int(to))
         print(result)
+        if request.user.is_authenticated:
+            if frome  != "" and to != "":
+                if(len(result) > 0):
+                    new_number = History.objects.create(user=request.user,from_number=frome,to_number=to,result=f"{len(result)} armstrong numbers found ,{result}")
+                    new_number.save()
+                else:
+                    new_number = History.objects.create(user=request.user,from_number=frome,to_number=to,result=f"No armstrong numbers found ")
+                    new_number.save()
+                    
+                
+        
         if result:
             return JsonResponse({'result': result})
         
