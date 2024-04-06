@@ -1,0 +1,14 @@
+to make a django project in the cmd 
+    django-admin startproject "<project name>"
+to make virtual enviroment
+    mkvirtualenv "<enviroment name>"
+to make django app
+    python manage.py startapp myapp
+to run project
+    python manage.py runserver
+to migrate to data base 
+    python manage.py makemigrations
+        then
+    python manage.py migrate
+to create admin
+    python manage.py createsuperuser

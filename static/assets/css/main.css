@@ -164,16 +164,25 @@ h6 {
   gap: 10px;
   justify-content: flex-end; /* Align buttons to the right */
 }
-.result{
+.result {
   margin-top: 10px;
   display: flex;
   text-align: center;
   height: 30px;
   width: 100%;
-  background-color: green;
+  background-color: white;
   color: white;
   align-items: center;
   justify-content: center;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+
+.red {
+  background-color: red;
+  color: white;
 }
 @media (max-width: 575px) {
 

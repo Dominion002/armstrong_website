@@ -193,3 +193,130 @@
   document.addEventListener('scroll', navmenuActive);
 
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  const armstrongForm = document.getElementById('armstrongForm');
+  const armstrongForm2 = document.getElementById('armstrongForm2');
+  const resultDiv = document.querySelector('.result');
+  const resultDiv2 = document.querySelector('.result2');
+  const resultDiv3 = document.querySelector('.result3');
+
+  armstrongForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      const formData = new FormData(armstrongForm);
+      const number = formData.get('number');
+      console.log(number)
+
+      fetch('/check-armstrong/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,  // Replace with your template variable if needed
+          },
+          body: JSON.stringify({ number: number }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.result) {
+              resultDiv.innerText = `${number} is an Armstrong number`;
+              resultDiv.classList.add('green');
+              resultDiv.classList.remove('red');
+          } else {
+              resultDiv.innerText = `${number} is not an Armstrong number`;
+              resultDiv.classList.add('red');
+              resultDiv.classList.remove('green');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  armstrongForm2.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const formData2 = new FormData(armstrongForm2);
+    const frome = formData2.get('frome');
+    const to = formData2.get('to');
+    console.log(frome)
+    console.log(2)
+
+    fetch('check_armstrongRange/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,  // Replace with your template variable if needed
+        },
+        body: JSON.stringify({ frome : frome , to: to}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (Array.isArray(data.result) && data.result.length > 0) {
+        resultDiv2.innerHTML = data.result.join(', ');
+        resultDiv2.style.height = 'auto';
+        resultDiv2.classList.add('green');
+        resultDiv3.innerHTML = data.result.length + " Armstrong Numbers Found";
+        resultDiv3.classList.add('green');
+        resultDiv2.classList.remove('red');
+    } else {
+        resultDiv2.innerHTML = `No Armstrong numbers found in the range.`;
+        resultDiv2.style.height = 'auto';
+        resultDiv2.classList.add('red');
+        resultDiv2.classList.remove('green');
+    }
+    })
+    .catch(error => console.error('Error:', error));
+});
+});
+clearBtn = document.querySelector('.clear');
+clearBtn2 = document.querySelector('.clear2');
+clearBtn.addEventListener('click', function() {
+  const resultDiv = document.querySelector('.result');
+  
+    document.querySelector('#number').value = '';
+    resultDiv.innerText = '';
+    resultDiv.classList.remove('green', 'red');
+});
+
+clearBtn2.addEventListener('click', function() {
+  const resultDiv2 = document.querySelector('.result2');
+  const resultDiv3 = document.querySelector('.result3');
+  
+    document.querySelector('#to').value = '';
+    document.querySelector('#frome').value = '';
+    resultDiv2.innerText = '';
+    resultDiv2.classList.remove('green', 'red');
+    resultDiv3.innerText = '';
+    resultDiv3.classList.remove('green', 'red');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const feedbackForm = document.getElementById('feedbackForm');
+  const loadingMessage = document.querySelector('.loading');
+  const errorMessage = document.querySelector('.error-message');
+  const successMessage = document.querySelector('.sent-message');
+
+  feedbackForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      loadingMessage.style.display = 'block';
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      const formData = new FormData(feedbackForm);
+      fetch('sendFeedback', {
+          method: 'POST',
+          body: formData,
+      })
+      .then(response => {
+          loadingMessage.style.display = 'none';
+          if (response.ok) {
+              successMessage.style.display = 'block';
+          } else {
+              errorMessage.style.display = 'block';
+          }
+      })
+      .catch(error => {
+          loadingMessage.style.display = 'none';
+          errorMessage.style.display = 'block';
+      });
+  });
+});

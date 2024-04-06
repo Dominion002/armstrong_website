@@ -5,14 +5,15 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Day Bootstrap Template</title>
+  <title>Armstrong Calculator</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token }}">
 
   <!-- Favicons -->
   
-  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <!-- <link href="{% static 'assets/img/favicon.png' %}" rel="icon"> -->
+  <!-- d -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -50,6 +51,12 @@
       <div class="container" data-aos="fade-up" data-aos-delay="50">
         <div class="row justify-content-start">
           <div class="col-lg-10">
+           
+            {% if user.is_authenticated %}
+            <h2 class="">Hi, {{user.username}}</h2>
+            {% else %}
+            <h2 class="">Hi</h2>
+            {% endif %}
             <h2 class="">Welcome to Armstrong Finder </h2>
             <p>
               Armstrong Numbers:
@@ -72,46 +79,49 @@
     <!-- About Section -->
     <section id="about" class="about section">
 
-      <!-- Section Title  For single numbers-->
+      <!-- Section Title For single numbers-->
       <div class="container section-title" data-aos="fade-up">
         <span class="">Find For a single number<br></span>
         <h2 class="">Find For a single number<br></h2>
-        <p>Input a number to check the number is an armstrong number or not</p>
+        <p>Input a number to check if it is an Armstrong number or not</p>
       </div><!-- End Section Title -->
-
+    
       <div class="container">
-
+    
         <div class="row gy-4">
-
+    
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
             <img src="assets/img/about.jpg" class="img-fluid" alt="">
           </div>
-
+    
           <div class="col-lg-12 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
             <div class="row calc">
-              <div class="input-field ">
-                  <label for="number">Enter a number</label>
-                  <input id="number" type="number" class="validate" v-model="number">
-                  
-              </div>
-              <div class="col s12 m12 l6 ">
-                  <p class="right-align">
-                      <a class="check btn-flat btn-oval green white-text" >Check</a>
-                      <a class="clear btn-flat btn-oval cs-red white-text">Clear</a>
-                  </p>
-              </div>
+              <form id="armstrongForm" method="post" action="check-armstrong/"  > <!-- Ensure action points to the correct URL -->
+                {% csrf_token %}
+                <div class="input-field">
+                    <label for="number">Enter a number</label>
+                    <input id="number" name="number" type="number" class="validate" v-model="number">
+                </div>
+                <div class="col s12 m12 l6">
+                    <p class="right-align">
+                        <button type="submit" class="check btn-flat btn-oval green white-text">Check</button> <!-- Change type to submit -->
+                        <button type="button" class="clear btn-flat btn-oval cs-red white-text">Clear</button>
+                    </p>
+                </div>
+            </form>
               <div class="result">
-                343 is a armstrong number
+                <!-- Result will be displayed here -->
               </div>
+            </div>
           </div>
-          </div>
-
+    
         </div>
-
+    
       </div>
-
+    
     </section><!-- /About Section -->
-
+    
+   
     <!-- CRange Section -->
     <section id="cards" class="cards section">
 
@@ -129,23 +139,30 @@
             </div>
             <div class="col-lg-12 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
                 <div class="row calc">
+
+                  <form id="armstrongForm2" method="post" action="check_armstrongRange/"  > <!-- Ensure action points to the correct URL -->
+                    {% csrf_token %}
                     <div class="input-field frf">
-                        <label for="from">From:</label>
-                        <input id="from" type="number" class="validate2" v-model="fromNumber">
-                    </div>
-                    <div class="input-field frf">
-                        <label for="to">To:</label>
-                        <input id="to" type="number" class="validate2" v-model="toNumber">
-                    </div>
-                    <div class="col s12 m12 l6">
-                        <p class="right-align">
-                            <a class="check btn-flat btn-oval green white-text">Check</a>
-                            <a class="clear btn-flat btn-oval cs-red white-text">Clear</a>
-                        </p>
-                    </div>
-                    <div class="result">
-                        343 is an Armstrong number
-                    </div>
+                      <label for="from">From:</label>
+                      <input id="frome" type="number" name="frome" class="validate2" v-model="fromNumber">
+                  </div>
+                  <div class="input-field frf">
+                      <label for="to">To:</label>
+                      <input id="to" type="number" name="to" class="validate2" v-model="toNumber">
+                  </div>
+                  <div class="col s12 m12 l6">
+                      <p class="right-align">
+                        <button type="submit" class="check check2 btn-flat btn-oval green white-text">Check</button> <!-- Change type to submit -->
+                        <button type="button" class="clear clear2 btn-flat btn-oval cs-red white-text">Clear</button>
+                    
+                          
+                      </p>
+                  </div>
+                  <div class="result result3 "></div> 
+                  <div class="result result2" style="margin-top: -5px;"></div>
+                </form>
+
+                    
                 </div>
             </div>
         </div>
@@ -157,101 +174,7 @@
     </section><!-- /Cards Section -->
 
  
-    <!-- Services Section -->
-    <section id="services" class="services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <span class="">Services</span>
-        <h2>Services</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item  position-relative">
-              <div class="icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Nesciunt Mete</h3>
-              </a>
-              <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis tempore et consequatur.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-broadcast"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Eosle Commodi</h3>
-              </a>
-              <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-easel"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Ledo Markt</h3>
-              </a>
-              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci eos earum corrupti.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-bounding-box-circles"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Asperiores Commodit</h3>
-              </a>
-              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident adipisci neque.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-calendar4-week"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Velit Doloremque</h3>
-              </a>
-              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem alias eius labore.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-chat-square-text"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Dolori Architecto</h3>
-              </a>
-              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae ducimus enim.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Services Section -->
-
+   
     <!-- Contact Section -->
     <section id="contact" class="contact section">
 
@@ -259,7 +182,7 @@
       <div class="container section-title" data-aos="fade-up">
         <span class="">Contact</span>
         <h2 class="">Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>You can get in touch with us with these information </p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -270,7 +193,7 @@
             <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
               <i class="bi bi-geo-alt"></i>
               <h3>Address</h3>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <p>Nile street , Lagos, Nigeria</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -278,7 +201,7 @@
             <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
               <i class="bi bi-telephone"></i>
               <h3>Call Us</h3>
-              <p>+1 5589 55488 55</p>
+              <p>080345543453</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -286,7 +209,7 @@
             <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
               <i class="bi bi-envelope"></i>
               <h3>Email Us</h3>
-              <p>info@example.com</p>
+              <p>armstrong@example.com</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -294,39 +217,42 @@
 
         <div class="row gy-4 mt-1">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 400px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d63411.83823584941!2d3.2962643356550405!3d6.617101424849024!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1711572002799!5m2!1sen!2sus" frameborder="0"  width="100%" height="400px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div><!-- End Google Maps -->
 
           <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="400">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-                </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
+           
+           
+            <form id="feedbackForm" data-aos="fade-up" data-aos-delay="400">
+              {% csrf_token %}
+              <div class="col-md-12">
+                  <label for="">Feedback Form</label>
               </div>
-            </form>
+              <div class="row gy-4">
+                  {% if not user.is_authenticated %}
+                      <div class="col-md-6">
+                          <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                      </div>
+                  {% endif %}
+                  <div class="col-md-12">
+                      <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  </div>
+                  <div class="col-md-12">
+                      <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  </div>
+                  <div class="col-md-12 text-center">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  <div class="loading" style="display: none;">Loading...</div>
+                  <div class="error-message" style="display: none;background-color: rgb(161, 37, 37);color: white;text-align: center;padding: 10px;">Error while sending message</div>
+                  <div class="sent-message" style="display: none;background-color: rgb(31, 209, 105);color: white;text-align: center;padding: 10px;">Your message has been sent. Thank you!</div>
+              </div>
+          </form>
+          
           </div><!-- End Contact Form -->
 
         </div>
@@ -420,6 +346,11 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <script>
+    // Assign CSRF token value to a JavaScript variable
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
