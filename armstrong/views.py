@@ -11,10 +11,31 @@ from . models import *
 # Create your views here.
 def index(request):
     return render(request,'index.html')  
-
+ 
 def settings(request):
-    return render(request,'profile.html')
-
+    user = request.user
+    first_error = ("","")
+    second_error = ("","")
+    if request.method  == "POST":
+        form =  Customerform(request.POST,instance=user)
+        d_form = Detailsform(request.POST,instance=user.customer)
+        if form.is_valid() and d_form.is_valid():
+            form.save()
+            d_form.save()
+            messages.success(request,'Account was sucesfully updated')
+            return redirect('settings') 
+        else:
+            if not form.is_valid():
+                first_error = next((field, errors[0]) for field, errors in form.errors.items())
+            elif not d_form.is_valid():
+                second_error = next((field, errors[0]) for field, errors in d_form.errors.items())
+           
+        
+    else:
+        form =  Customerform(instance=user)
+        d_form = Detailsform(instance=user.customer)
+    context = { 'd_form':d_form, 'form':form, "error":first_error,"error2":second_error}
+    return render(request,'profile.html',context)
 # views.py
 
 from django.http import JsonResponse
@@ -96,9 +117,14 @@ def register(request):
     if request.method == "POST":
          userform = UserForm(request.POST)
          if userform.is_valid():
-             userform.save()
-             user  = userform.cleaned_data.get('username')
-             messages.success(request,'Account was created for '+ user)
+             user = userform.save()
+             Customer.objects.create(
+                user=user,
+                phone_number=userform .cleaned_data.get('phone_number'),
+                name=userform.cleaned_data.get('name')
+            )
+             usern  = userform.cleaned_data.get('username')
+             messages.success(request,'Account was created for '+ usern)
              return redirect("login")
          else:
              errors = next((name , error[0]) for name,error  in userform.errors.items())

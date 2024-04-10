@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formData2 = new FormData(armstrongForm2);
     const frome = formData2.get('frome');
     const to = formData2.get('to');
+    
     console.log(frome)
     console.log(2)
 

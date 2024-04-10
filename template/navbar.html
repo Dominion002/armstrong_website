@@ -15,7 +15,9 @@
           <ul>
             <li><a href="/#hero" class="">Home</a></li>
             <li><a href="/#about">Calculator</a></li>
+            {% if user.is_authenticated %}
             <li><a href="settings">Settings</a></li>
+            {% endif %}
             <li><a href="/#contact">Contact</a></li>
             {% if user.is_authenticated %}
             <li><a href="logout">Logout</a></li>

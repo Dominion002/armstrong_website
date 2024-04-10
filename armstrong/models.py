@@ -17,7 +17,15 @@ class History(models.Model):
             return f"{self.user}  checked  {self.number}"
         return f"{self.user}  checked   {self.from_number}  AND {self.to_number}"
     
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100,null=True)
+    phone_number = models.IntegerField(null=True)
+    name = models.CharField(max_length=100,null=True)
 
+    def __str__(self):
+        return self.user.username
+    
 class Feedback(models.Model):
     user = models.CharField(max_length=200,null=True)
     email = models.CharField(max_length=200,null=True)

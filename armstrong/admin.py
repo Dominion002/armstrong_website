@@ -4,3 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(History)
 admin.site.register(Feedback)
+admin.site.register(Customer)

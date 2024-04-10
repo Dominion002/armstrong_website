@@ -11,7 +11,7 @@
     <div class="h-screen flex-grow-1 overflow-y-lg-auto">
       
       <!-- Main -->
-      
+       
       <main class="py-6 bg-surface-secondary">
         <div class="container-fluid">
           <div class="row">
@@ -21,21 +21,30 @@
               <h5 class="mb-5"> u</h5>
               <h5 class="mb-5">Account Information</h5>
               <!-- Form -->
-              
-               
-              
-              <form class="mb-6">
+              {% for message in messages %}
+              <p id="messages">{{message}}</p>
+              {% endfor%}
+               <form method="post">
+                {%csrf_token%}
+                <p>{{error.1}}</p>
+                <p>{{error2.1}}</p>
+                {{form}}
+                {{d_form}}
+                <input type="submit">
+               </form>
+
+               <form class="mb-6">
                 <div class="row mb-5">
                     
                   <div class="col-md-6">
                     <div class="">
-                      <label class="form-label" for="first_name">First name</label>
+                      <label class="form-label" for="first_name">Username</label>
                       <input type="text" class="form-control" id="first_name">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="">
-                      <label class="form-label" for="last_name">Last name</label>
+                      <label class="form-label" for="last_name">Name</label>
                       <input type="text" class="form-control" id="last_name">
                     </div>
                   </div>
@@ -59,29 +68,9 @@
                       <input type="text" class="form-control" id="address">
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="">
-                      <label class="form-label" for="city">City</label>
-                      <input type="text" class="form-control" id="city">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="">
-                      <label class="form-label" for="country">Country</label>
-                      <select class="form-select" id="country" placeholder="Your email" aria-label="Default select example">
-                        <option selected>Country</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="">
-                      <label class="form-label" for="zip">ZIP</label>
-                      <input type="tel" class="form-control" id="zip">
-                    </div>
-                  </div>
+                  
+                  
+                  
                   <div class="col-12">
                     
                   </div>
@@ -91,6 +80,9 @@
                   <button type="submit" class="btn btn-sm btn-primary">Save</button>
                 </div>
               </form>
+              
+              
+                 
               <hr class="my-10" />
               <!-- Individual switch cards -->
               <div class="row g-6">

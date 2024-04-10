@@ -114,6 +114,7 @@ body{
   <title>Login</title>
 </head>
 <body>
+  
   <div class="container">
     <input type="checkbox" id="check">
     <div class="login form">
@@ -123,7 +124,7 @@ body{
         {% for message in messages %}
             <p id="messages">{{message}}</p>
         {% endfor%}
-        <input type="text" name="username" placeholder="Enter your email">
+        <input type="text" name="username" placeholder="Enter your username">
         <input type="password" name="password" placeholder="Enter your password">
         
         <input type="submit" class="button" value="Login">
