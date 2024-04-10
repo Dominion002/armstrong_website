@@ -20,6 +20,10 @@ class Customerform(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email',] 
+        widgets = {
+            "username": forms.TextInput(attrs={'class':'form-control'}),
+            "email": forms.TextInput(attrs={'class':'form-control'})
+        }
         
         
     def clean_email(self):
@@ -36,6 +40,14 @@ class Detailsform(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'phone_number','address'] 
+        widgets = {
+            "name": forms.TextInput(attrs={'class':'form-control'}),
+            "phone_number": forms.TextInput(attrs={'class':'form-control'},
+            ),
+            "address": forms.TextInput(attrs={'class':'form-control'},
+            ),
+        }
+        
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
         instance = getattr(self, 'instance', None)

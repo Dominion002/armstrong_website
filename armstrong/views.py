@@ -152,6 +152,7 @@ def logoutPage(request):
     return redirect('login')
 
 def send_feedback(request):
+    
     if request.user.is_authenticated:
         name = request.user.username
         email = request.user.email
@@ -166,3 +167,9 @@ def send_feedback(request):
         feedback.save()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'}, status=400)
+
+
+def user_history(request):
+    # Get the logged-in user's history
+    user_history = History.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'history.html', {'user_history': user_history})

@@ -268,6 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => console.error('Error:', error));
 });
+
+
+
+
 });
 clearBtn = document.querySelector('.clear');
 clearBtn2 = document.querySelector('.clear2');
