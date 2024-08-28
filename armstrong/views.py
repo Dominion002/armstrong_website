@@ -8,10 +8,14 @@ from django.contrib.auth import *
 from django.contrib.auth import login
 from . decorators import *
 from . models import *
+from django.http import JsonResponse
 # Create your views here.
 def index(request):
     return render(request,'index.html')  
  
+ 
+ #This is the view for the settings page 
+@authenticated_user
 def settings(request):
     user = request.user
     first_error = ("","")
@@ -36,10 +40,9 @@ def settings(request):
         d_form = Detailsform(instance=user.customer)
     context = { 'd_form':d_form, 'form':form, "error":first_error,"error2":second_error}
     return render(request,'profile.html',context)
-# views.py
 
-from django.http import JsonResponse
 
+#this is the view to check a single armstrong number 
 def check_armstrong(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -65,6 +68,7 @@ def check_armstrong(request):
         return JsonResponse({'result': result})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
+ #This is the function to check a range of armstrong numbers
 def check_armstrongRange(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -110,6 +114,8 @@ def armstrong_numbers_between(start, end):
             armstrong_numbers.append(num)
     return armstrong_numbers
 
+
+#This is the view for the register page
 @unauthenticated_user
 def register(request):
     errors =("","")
@@ -132,6 +138,7 @@ def register(request):
     context = {"form":userform,'errors':errors}
     return render(request,'register.html',context)
 
+#This is the view for the login page
 @unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
@@ -146,6 +153,7 @@ def loginPage(request):
             return render(request,'login.html')
     return render(request,'login.html')
 
+ #This is the view for the logout page
 def logoutPage(request):
     
     logout(request)
@@ -168,8 +176,15 @@ def send_feedback(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'}, status=400)
 
-
+#This is the view for the history page
+@authenticated_user
 def user_history(request):
     # Get the logged-in user's history
     user_history = History.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'history.html', {'user_history': user_history})
+
+def handling_404(request,exception) :
+    return render(request, '404.html', {})
+
+
+  

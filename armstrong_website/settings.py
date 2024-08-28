@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-vpx25kt_*!v)09=2u$aklv729j9y-r^5x&8-@u@trb6+*dj*@f
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+        
 
 # Application definition
 
@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'armstrong_website.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'armstrong_website.urls'
@@ -123,3 +124,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# specific url 
+LOGIN_URL = 'login'
+LOGIN_EXEMPT_URL=('logout','register','login','sendFeedback',"","check-armstrong","check_armstrongRange")
+
