@@ -25,10 +25,8 @@ SECRET_KEY = 'django-insecure-vpx25kt_*!v)09=2u$aklv729j9y-r^5x&8-@u@trb6+*dj*@f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'armstrong-website.vercel.app',
-    'armstrong-website-91wddvhjv-dominion002s-projects.vercel.app',
-]
+# api/settings.py
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
         
 
 # Application definition
@@ -72,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'armstrong_website.wsgi.application'
+WSGI_APPLICATION = 'armstrong_website.wsgi.app'
 
 
 # Database
